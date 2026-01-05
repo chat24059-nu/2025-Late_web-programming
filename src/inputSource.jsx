@@ -1,4 +1,4 @@
-const inputSource=["Sin","Square","Saw","Browse","REC","File"]
+const inputSource=["Wave","Browse","REC"]
 
 const PulldownMenu = ({selected,onChange}) => {
   return (

@@ -1,0 +1,45 @@
+html{
+    font-family: "Yu Mincho","YuMincho",serif;
+    font-weight: normal;
+    color:white;
+    background-color: black;
+}
+
+body{
+    margin-top: 30px;
+    margin-bottom: 30px;
+    margin-left: 10px;
+    margin-right:10px;
+}
+
+t1{
+    font-size: 36px;
+    font-style: italic;
+    width: fit-content;
+}
+
+h4{
+    font-weight: lighter;
+}
+
+.inputSelect{
+    padding: 0px;
+    border-radius: 6px;
+    border: 1px solid #000;
+    background-color: #000;
+    color: #fff;
+    font-size: 24px;
+}
+
+.head-field{
+    display: flex;
+    justify-content: space-between;
+}
+
+.menu-field{
+    display: flex;
+}
+
+.center{
+    text-align: center;
+}

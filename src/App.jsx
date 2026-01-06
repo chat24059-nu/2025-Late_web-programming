@@ -22,12 +22,12 @@ function clock(value){
 export default function App(){
     let millis = performance.now()-startTime;
     const[selectedInput,setSelectedInput]=useState("Wave");
-    const[waveChara,setWaveChara]=useState([1000,2,100,0,"Mute"])
+    const[waveChara,setWaveChara]=useState([500,20,250,0,"Mute"])
     let wave=[];
     if(selectedInput==="Wave"){
         wave=generate([millis,waveChara]);
     }else{
-        wave=Array.fill(0);
+        wave=new Array(generate([millis, waveChara]).length).fill(0);
     }
     return(
         <>

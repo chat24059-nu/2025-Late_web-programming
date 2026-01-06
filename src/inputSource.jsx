@@ -1,4 +1,4 @@
-const inputSource=["Wave","Browse","REC"]
+const inputSource=["Wave","MIC"]
 
 const PulldownMenu = ({selected,onChange}) => {
   return (

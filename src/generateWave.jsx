@@ -8,6 +8,8 @@ function mute([millis,waveChara]){
     const newWave=[...wave];
     for(let i=frame;i<Math.floor(millis/1000*waveChara[2]);i++){
       newWave.push(0);
+    }
+    while(newWave.length>waveChara[0]){
       newWave.shift();
     }
     
@@ -26,9 +28,11 @@ function sinWave([millis,waveChara]){
     const newWave=[...wave];
     for(let i=frame;i<Math.floor(millis/1000*waveChara[2]);i++){
       newWave.push(Math.min(vol*Math.sin(2*Math.PI*waveChara[1]*i/waveChara[2]),1));
+    }
+    while(newWave.length>waveChara[0]){
       newWave.shift();
     }
-    
+
     proceed(Math.floor(millis/1000*waveChara[2]));
     setWave(newWave);
   },[millis,frame,waveChara]);

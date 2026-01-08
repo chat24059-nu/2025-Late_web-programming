@@ -20,7 +20,7 @@ export default function AnalyseFrequency({wave=[],waveChara=[]}){
     const input=new Float32Array(N);
     const comp=fft.createComplexArray();
     for(let i=0;i<N;i++){
-        input[i]=wave[N-1-i];
+        input[i]=wave[wave.length-1-i];
     }
     fft.realTransform(comp,input);
     fft.completeSpectrum(comp);

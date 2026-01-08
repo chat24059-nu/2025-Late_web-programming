@@ -16,8 +16,8 @@ export function generate(millis,waveChara){
         return 0;
   }};
   useEffect(() => {
-    const startFrame=Math.min(frame,millis/1000*waveChara[2]-wave.length);
     const targetFrame=Math.floor(millis/1000*waveChara[2]);
+    const startFrame=Math.max(frame,targetFrame-wave.length);
     const newWave=[...wave];
     for(let i=startFrame;i<targetFrame;i++){
       newWave.push(waveForm(i));

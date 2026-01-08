@@ -1,4 +1,4 @@
-import {useState,useEffect} from 'react'
+import {useState} from 'react'
 import DrawInput from "./inputSource";
 import DrawWave from "./drawWave";
 import WaveCharaDisplay from "./WaveCharaDisplay"
@@ -35,9 +35,9 @@ function draw({millis,wave,waveChara,setWaveChara,selectedInput,setSelectedInput
             <div>
                 <div className="head-field">
                     <AnalyseFrequency wave={wave} waveChara={waveChara}/>
-                    <VolMeter wave={wave} waveChara={waveChara}/>
+                    <VolMeter wave={wave}/>
                 </div>
-                <DrawWave wave={wave} waveChara={waveChara}/>
+                <DrawWave wave={wave}/>
                 <div>
                     <h4 className='center'>
                         {clock(Math.round((millis)/60000)%100)}:

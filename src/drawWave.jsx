@@ -1,6 +1,6 @@
 import {useState,useEffect } from 'react';
 
-const DrawWave = ({wave,waveChara}) => {
+const DrawWave = ({wave}) => {
     const style=getComputedStyle(document.body);
     const sideMergin=parseInt(style.marginLeft)+parseInt(style.marginRight);
     let [width,setWidth]=useState(window.innerWidth-sideMergin);

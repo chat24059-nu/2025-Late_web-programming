@@ -1,4 +1,4 @@
-export function VolMeter({wave,waveChara}){
+export default function VolMeter({wave}){
     const bufSize=Math.min(wave.length,512);
     console.log({wave});
     let sqSum=0;

@@ -1,4 +1,4 @@
-import {useState} from 'react'
+import {useState,useEffect} from 'react'
 import DrawInput from "./inputSource";
 import DrawWave from "./drawWave";
 import WaveCharaDisplay from "./WaveCharaDisplay"
@@ -19,21 +19,12 @@ function clock(value){
     }
 }
 
-export default function App(){
-    let millis = performance.now()-startTime;
-    const[selectedInput,setSelectedInput]=useState("Wave");
-    const[waveChara,setWaveChara]=useState([500,20,250,0,"Mute"])
-    let wave=[];
-    if(selectedInput==="Wave"){
-        wave=generate([millis,waveChara]);
-    }else{
-        wave=new Array(generate([millis, waveChara]).length).fill(0);
-    }
+function draw({millis,wave,waveChara,setWaveChara,selectedInput,setSelectedInput}){
     return(
         <>
             <header>
                 <div className="head-field">
-                    <t1 onClick={reloadPage}>WaveAnalyzer</t1>
+                    <h1 className="top" onClick={reloadPage}>WaveAnalyzer</h1>
                     {["Wave"].includes(selectedInput) && (
                         <WaveCharaDisplay waveChara={waveChara} setWaveChara={setWaveChara} />
                     )}
@@ -42,13 +33,29 @@ export default function App(){
             </header>
             <div>
                 <AnalyseFrequency wave={wave} waveChara={waveChara}/>
-                <DrawWave input={wave}/>
+                <DrawWave wave={wave} waveChara={waveChara}/>
                 <div>
                     <h4 className='center'>
-                        {clock(Math.round((millis)/60000)%100)}:{clock(Math.round((millis)/1000)%60)}:{clock(Math.round((millis)/10)%100)}
+                        {clock(Math.round((millis)/60000)%100)}:
+                        {clock(Math.round((millis)/1000)%60)}:
+                        {clock(Math.round((millis)/10)%100)}
                     </h4>
                 </div>
             </div>
         </>
     );
+}
+
+export default function App(){
+    const[selectedInput,setSelectedInput]=useState("Wave");
+    const[waveChara,setWaveChara]=useState([1024,2000,44100,0,"Mute"]);
+    const millis = performance.now()-startTime;
+    
+    let wave=[];
+    if(selectedInput==="Wave"){
+        wave=generate(millis,waveChara);
+    }else{
+        wave=new Array(generate(millis, waveChara).length).fill(0);
+    }
+    return draw({millis,wave,waveChara,setWaveChara,selectedInput,setSelectedInput, });
 }

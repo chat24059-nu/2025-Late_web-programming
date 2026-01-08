@@ -1,4 +1,5 @@
 import {useEffect,useState} from "react";
+import FFT from "fft.js";
 
 function euclid(a,b){
     return Math.sqrt(Math.pow(a,2)+Math.pow(b,2));
@@ -14,26 +15,25 @@ export default function AnalyseFrequency({wave=[],waveChara=[]}){
     }, []);
 
     const lines=[];
-    let [size,zoom]=useState(1)
-    let N=Math.min(waveChara[0],waveChara[2]);
-
-    for(let i=1;i<=waveChara[2]/2;i++){
-        const x=i/(waveChara[2]/2.0+1)*width;
-        let real=0;
-        let imag=0;
-        const e=-2*Math.PI*i/waveChara[2];
-        for(let j=0;j<N;j++){
-            real+=wave[waveChara[0]-1-j]*Math.cos(e*j);
-            imag+=wave[waveChara[0]-1-j]*Math.sin(e*j);
-        }
-        const lev=euclid(real,imag);
+    let N=Math.pow(2, Math.floor(Math.log2(Math.min(wave.length,waveChara[2]))));
+    const fft = new FFT(N);
+    const input=new Float32Array(N);
+    const comp=fft.createComplexArray();
+    for(let i=0;i<N;i++){
+        input[i]=wave[N-1-i];
+    }
+    fft.realTransform(comp,input);
+    fft.completeSpectrum(comp);
+    for(let i=1;i<N/2;i++){
+        const x=i/(Math.ceil(N/2))*width;
+        const lev=euclid(comp[2*i],comp[2*i+1]);
         lines.push(
-            <line key={x}
+            <line key={i}
                 x1={x}
                 y1={height}
                 x2={x}
                 y2={height-300*lev/N}
-                style={{ stroke: "lightblue", strokeWidth: width/(waveChara[2]/2.0) }}
+                style={{ stroke: "lightblue", strokeWidth: 2*width/N}}
             />
         );
     }

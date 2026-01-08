@@ -1,6 +1,6 @@
 import {useState,useEffect } from 'react';
 
-const DrawWave = ({input=[]}) => {
+const DrawWave = ({wave,waveChara}) => {
     let [width,setWidth]=useState(window.innerWidth)
     let height=200
     useEffect(() => {
@@ -10,17 +10,18 @@ const DrawWave = ({input=[]}) => {
     }, []);
 
     const lines = [];
-    let [size,zoom] = useState(1);
-    for(let i=0; i<=input.length ;i+=size){
-        const x=width/input.length*i;
+    const size=Math.max(1,wave.length/512);
+    for(let i=0; i<wave.length ;i+=size){
+        const x=width/wave.length*i;
         const y=height/2.0;
+        
         lines.push(
             <line key={x}
                 x1={x}
                 y1={y}
                 x2={x}
-                y2={y*(1-input[i])}
-                style={{ stroke: 'lightblue', strokeWidth: 1 }}
+                y2={y*(1-wave[Math.ceil(i)])}
+                style={{ stroke: 'lightblue', strokeWidth: width/512}}
             />
         );
     }

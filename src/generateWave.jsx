@@ -9,7 +9,7 @@ export function generate(millis,waveChara){
       case "Sin":
         return Math.min(vol*Math.sin((2*Math.PI* waveChara[1]*i)/waveChara[2]),1);
       case "Square":
-        return vol*(Math.round((2*waveChara[1]*i)/waveChara[2])%2===0?1:-1);
+        return Math.min(1,vol)*(Math.round((2*waveChara[1]*i)/waveChara[2])%2===0?1:-1);
       case "Saw":
         return Math.min(vol*(2*((i*waveChara[1])%waveChara[2])/waveChara[2]-1),1);
       default:

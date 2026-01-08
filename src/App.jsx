@@ -4,6 +4,7 @@ import DrawWave from "./drawWave";
 import WaveCharaDisplay from "./WaveCharaDisplay"
 import {generate} from "./generateWave";
 import AnalyseFrequency from './FrequencyAnalysis';
+import VolMeter from "./DisplayVol";
 
 const startTime = performance.now();
 
@@ -32,7 +33,10 @@ function draw({millis,wave,waveChara,setWaveChara,selectedInput,setSelectedInput
                 </div>
             </header>
             <div>
-                <AnalyseFrequency wave={wave} waveChara={waveChara}/>
+                <div className="head-field">
+                    <AnalyseFrequency wave={wave} waveChara={waveChara}/>
+                    <VolMeter wave={wave} waveChara={waveChara}/>
+                </div>
                 <DrawWave wave={wave} waveChara={waveChara}/>
                 <div>
                     <h4 className='center'>

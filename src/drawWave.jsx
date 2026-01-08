@@ -1,10 +1,12 @@
 import {useState,useEffect } from 'react';
 
 const DrawWave = ({wave,waveChara}) => {
-    let [width,setWidth]=useState(window.innerWidth)
+    const style=getComputedStyle(document.body);
+    const sideMergin=parseInt(style.marginLeft)+parseInt(style.marginRight);
+    let [width,setWidth]=useState(window.innerWidth-sideMergin);
     let height=200
     useEffect(() => {
-        const handleResize = () => setWidth(window.innerWidth);
+        const handleResize = () => setWidth(window.innerWidth-sideMergin);
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
     }, []);

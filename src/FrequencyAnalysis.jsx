@@ -6,16 +6,18 @@ function euclid(a,b){
 }
 
 export default function AnalyseFrequency({wave=[],waveChara=[]}){
-    let [width,setWidth]=useState(window.innerWidth/2);
+    const style=getComputedStyle(document.body);
+    const sideMergin=parseInt(style.marginLeft)+parseInt(style.marginRight);
+    let [width,setWidth]=useState((window.innerWidth-sideMergin)/2);
     let height=300;
     useEffect(() => {
-        const handleResize = () => setWidth(window.innerWidth/2);
+        const handleResize = () => setWidth((window.innerWidth-sideMergin)/2);
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
     const lines=[];
-    let N=Math.pow(2, Math.floor(Math.log2(Math.min(wave.length,waveChara[2]))));
+    let N=Math.pow(2, Math.min(Math.floor(Math.log2(wave.length)),Math.ceil(Math.log2(waveChara[2]))));
     const fft = new FFT(N);
     const input=new Float32Array(N);
     const comp=fft.createComplexArray();
@@ -41,7 +43,8 @@ export default function AnalyseFrequency({wave=[],waveChara=[]}){
     return (
         <svg width={width} height={height} style={{ border: "1px solid black" }}>
             {lines}
-            <rect x={0} y={0} width={width} height={height} style={{stroke:'white',strokeWidth:2,fill:'none'}}/>
+            <line x1={0} y1={0} x2={width} y2={0} style={{stroke:'white',strokeWidth:2}}/>
+            <line x1={0} y1={height} x2={width} y2={height} style={{stroke:'white',strokeWidth:2}}/>
         </svg>
     );
 }

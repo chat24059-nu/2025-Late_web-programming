@@ -12,9 +12,8 @@ export function useMicWave(bufsize){
             const stream=await navigator.mediaDevices.getUserMedia({audio:true});
             audioContextRef.current=new (window.AudioContext||window.webkitAudioContext)();
             analyserRef.current=audioContextRef.current.createAnalyser();
-            analyserRef.current.fftSize=2*bufsize;
 
-            dataArrayRef.current=new Float32Array(analyserRef.current.fftSize);
+            dataArrayRef.current=new Float32Array(2*bufsize);
             const source=audioContextRef.current.createMediaStreamSource(stream);
             source.connect(analyserRef.current);
 

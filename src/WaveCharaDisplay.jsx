@@ -1,44 +1,36 @@
 const waveForm=["Mute","Sin","Square","Saw"]
 
 const PulldownMenu = ({selected,onChange}) => {
-  return (
-    <select className="inputSelect" value={selected} onChange={(e) => onChange(e.target.value)}>
-      {waveForm.map((item) => {
-        return <option key={item} value={item}>{item}</option>;
-      })}
-    </select>
-  );
+    return (
+        <select className="inputSelect" value={selected} onChange={(e)=>onChange(e.target.value)}>
+            {waveForm.map((item)=>{
+                return <option key={item} value={item}>{item}</option>;
+            })}
+        </select>
+    );
 };
 
-const SpinBox = ({ value, onChange, min, max, step = 1 }) => {
-  const handleChange = (e) => {
-    const newValue = e.target.value;
+const SpinBox=({value,onChange,min,max,step=1})=>{
+    const handleChange=(e)=>{
+        const newValue=e.target.value;
+        if (newValue==='') return;
+        const num=Number(newValue);
+        if (isNaN(num)||(min!==undefined&&num<min)||(max!==undefined&&num>max)) return;
+        onChange(num);
+    };
 
-    // 空文字はスキップ（入力中の一時的な状態）
-    if (newValue === '') return;
-
-    const num = Number(newValue);
-
-    // 数値でない or 範囲外ならスキップ
-    if (isNaN(num) || (min !== undefined && num < min) || (max !== undefined && num > max)) {
-      return;
-    }
-
-    onChange(num);
-  };
-
-  return (
-    <input
-      type="number"
-      value={value}
-      onChange={handleChange}
-      min={min}
-      max={max}
-      step={step}
-      className="inputSelect"
-      style={{ width: '80px' }}
-    />
-  );
+    return (
+        <input
+            type="number"
+            value={value}
+            onChange={handleChange}
+            min={min}
+            max={max}
+            step={step}
+            className="inputSelect"
+            style={{width:'80px'}}
+        />
+    );
 };
 
 export default function WaveCharaDisplay({waveChara,setWaveChara}){

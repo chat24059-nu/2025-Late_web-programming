@@ -2,9 +2,10 @@ import {useState} from 'react'
 import DrawInput from "./inputSource";
 import DrawWave from "./drawWave";
 import WaveCharaDisplay from "./WaveCharaDisplay"
-import {generate} from "./generateWave";
+import {useGenerate} from "./generateWave";
 import AnalyseFrequency from './FrequencyAnalysis';
 import VolMeter from "./DisplayVol";
+import {useMicWave} from './WebAudio';
 
 const startTime = performance.now();
 
@@ -26,9 +27,7 @@ function draw({millis,wave,waveChara,setWaveChara,selectedInput,setSelectedInput
             <header>
                 <div className="head-field">
                     <h1 className="top" onClick={reloadPage}>WaveAnalyzer</h1>
-                    {["Wave"].includes(selectedInput) && (
-                        <WaveCharaDisplay waveChara={waveChara} setWaveChara={setWaveChara} />
-                    )}
+                    <WaveCharaDisplay waveChara={waveChara} setWaveChara={setWaveChara} />
                     <DrawInput selected={selectedInput} onChange={setSelectedInput}/>
                 </div>
             </header>
@@ -51,15 +50,17 @@ function draw({millis,wave,waveChara,setWaveChara,selectedInput,setSelectedInput
 }
 
 export default function App(){
-    const[selectedInput,setSelectedInput]=useState("Wave");
+    const[selectedInput,setSelectedInput]=useState("Internal");
     const[waveChara,setWaveChara]=useState([1024,2000,44100,0,"Mute"]);
     const millis = performance.now()-startTime;
+    const internal=useGenerate(millis,waveChara);
+    const mic=useMicWave(waveChara[0]);
     
-    let wave=[];
-    if(selectedInput==="Wave"){
-        wave=generate(millis,waveChara);
+    let wave = new Float32Array(waveChara[0]);
+    if(selectedInput==="Internal"){
+        wave=internal;
     }else{
-        wave=new Array(generate(millis, waveChara).length).fill(0);
+        wave=mic;
     }
     return draw({millis,wave,waveChara,setWaveChara,selectedInput,setSelectedInput, });
 }

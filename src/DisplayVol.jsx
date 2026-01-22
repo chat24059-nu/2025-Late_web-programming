@@ -1,6 +1,5 @@
 export default function VolMeter({wave}){
     const bufSize=Math.min(wave.length,512);
-    console.log({wave});
     let sqSum=0;
     for(let i=0;i<bufSize;i++){
         sqSum+=Math.pow(wave[wave.length-i-1],2);

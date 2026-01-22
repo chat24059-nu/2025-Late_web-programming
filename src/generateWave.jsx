@@ -7,11 +7,11 @@ export function useGenerate(millis,waveChara){
     const waveForm=(i)=>{
         switch(waveChara[4]){
             case "Sin":
-                return Math.min(vol*Math.sin((2*Math.PI* waveChara[1]*i)/waveChara[2]),1);
+                return Math.sin((2*Math.PI* waveChara[1]*i)/waveChara[2]);
             case "Square":
-                return Math.min(1,vol)*(Math.round((2*waveChara[1]*i)/waveChara[2])%2===0?1:-1);
+                return Math.round((2*waveChara[1]*i)/waveChara[2])%2===0?1:-1;
             case "Saw":
-                return Math.min(vol*(2*((i*waveChara[1])%waveChara[2])/waveChara[2]-1),1);
+                return 2*((i*waveChara[1])%waveChara[2])/waveChara[2]-1;
             default:
                 return 0;
     }};
@@ -21,7 +21,7 @@ export function useGenerate(millis,waveChara){
         const startFrame=Math.max(frame,targetFrame-wave.length);
         const newWave=[...wave];
         for(let i=startFrame;i<targetFrame;i++){
-            newWave.push(waveForm(i));
+            newWave.push(Math.max(-1,Math.min(1,waveForm(i))));
         }
         while(newWave.length>waveChara[0]){
             newWave.shift();

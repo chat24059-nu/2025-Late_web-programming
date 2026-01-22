@@ -60,7 +60,8 @@ export default function App(){
     if(selectedInput==="Internal"){
         wave=internal;
     }else{
-        wave=mic;
+        let vol=Math.pow(10,waveChara[3]/20);
+        wave=mic.map(value=>Math.max(-1,Math.min(value*vol,1)));
     }
     return draw({millis,wave,waveChara,setWaveChara,selectedInput,setSelectedInput, });
 }
